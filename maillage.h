@@ -9,7 +9,7 @@
 
 using namespace std;
 
-
+//classe point
 
 class Point2d{
 	public:
@@ -36,6 +36,112 @@ Point2d operator /(const Point2d&,double);
 
 
 
+
+
+
+
+//
+//
+//
+//classe vect
+
+
+void stop(const char * msg);                     //message d'arr\EAt
+void test_dim(int d1, int d2, const char * org); //test dimension
+
+//classe vecteur de r\E9els double pr\E9cision
+class vecteur
+{
+private :
+   int dim_;          //dimension du vecteur
+   double * val_;     //tableaux de valeurs
+
+public:
+   vecteur(int d=0, double v0=0); //dim et val constante
+   vecteur(const vecteur & v);    //constructeur par copie
+   ~vecteur();
+
+   //tools
+   void init(int d);              //allocation
+   void clear();                  //d\E9sallocation
+   int dim() const {return dim_;} //acc\E8s dimension
+
+
+
+
+
+   vecteur & operator =(const vecteur & v);
+
+   vecteur & operator =(double x);
+
+   double & operator [](int i);
+
+   double operator [] (int i) const;
+
+   double & operator ()(int i);
+
+   double operator () (int i) const;
+
+
+   vecteur operator ()(int i,int j)const;
+
+   vecteur& operator +=(const vecteur & v);
+
+   vecteur& operator -=(const vecteur & v);
+
+   vecteur& operator +=(double x);
+
+   vecteur& operator -=(double x);
+
+
+};
+
+vecteur operator +(const vecteur & u);
+vecteur operator -(const vecteur & u);
+
+
+vecteur operator +(const vecteur & u,const vecteur & v);
+vecteur operator -(const vecteur & u,const vecteur & v);
+
+
+vecteur operator +(double x,const vecteur & v);
+vecteur operator -(double x,const vecteur & v);
+
+vecteur operator +(const vecteur & u,double x);
+vecteur operator -(const vecteur & u,double x);
+
+
+vecteur operator *=(const vecteur & u,double x);
+vecteur operator /=(const vecteur & u,double x);
+
+vecteur operator *(const vecteur & u,double x);
+vecteur operator *(double x,const vecteur & u);
+vecteur operator /(const vecteur & u,double x);
+
+bool operator ==(const vecteur & u,const vecteur & v);
+bool operator !=(const vecteur & u,const vecteur & v);
+
+ostream & operator <<(ostream & out,const vecteur & u);
+
+istream & operator>>(istream & is , vecteur & u);
+
+double operator |(const vecteur & u,const vecteur & v);
+
+vecteur operator ,(const vecteur & u,const vecteur & v);
+
+
+
+
+
+
+
+
+//
+//
+//
+//classe num
+
+
 class Numeros:public vector<int>
 {public:
 	Numeros(int a,int b,int c){
@@ -60,18 +166,34 @@ class Numeros:public vector<int>
 		return n;
 	}
 };
-ostream & operator <<(ostream &,Numeros &);
+ostream & operator <<(ostream &,const Numeros &);
+
+
+
+
+
+
+
+
+
+
+//
+//
+//
+//classe maillage
+
 
 
 class Maillage{
 	public:
-		vector<Point2d> v;
-		list<Numeros> n;
+		vector<Point2d> v;     //liste de points
+		list<Numeros> n;        // liste de numero de points de triangle,car chaque rectangle est découpé en 2 triangle, donc , ici,chaque listnum est une liste de numé de chaque triangle
 		
-		/*void maille_carre_unite(int,int);*/
+		void maille_carre_unite(int,int);
 		void affichage();
 		Maillage& tf_affine(const vector<double> &,const vector<double> &);
 		Maillage& operator +=(const Maillage &);
+		void maiile_rectangle(double ,double,double,double,int,int);
 		
 };
 
