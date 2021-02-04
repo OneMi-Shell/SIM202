@@ -49,7 +49,7 @@ Point2d operator /(const Point2d&,double);
 void stop(const char * msg);                     //message d'arr\EAt
 void test_dim(int d1, int d2, const char * org); //test dimension
 
-//classe vecteur de r\E9els double pr\E9cision
+
 class vecteur
 {
 private :
@@ -132,6 +132,59 @@ vecteur operator ,(const vecteur & u,const vecteur & v);
 
 
 
+//
+//
+//
+//matrice creuse
+class matcreuse
+{
+private :
+   int dim_;          //dimension de mat
+   int nbval;         //nb de val non nul
+   double * val_;     //tableaux de val non nul de matcreuse
+	int * posii;
+	int * posij;
+public:
+	matcreuse(){dim_=0;nbval=0;val_=NULL;posii=NULL;posij=NULL;}
+	matcreuse(int n){dim_=n;nbval=0;val_=NULL;posii=NULL;posij=NULL;}
+	matcreuse(int d,int n,double* t1,int* t2,int* t3){
+		dim_=d;
+		nbval=n;
+		for (int i = 0; i < n; i++)
+		{
+			val_[i]=t1[i];
+			posii[i]=t2[i];
+			posij[i]=t3[i];
+		}
+		
+	}
+
+	int getdim() const{return dim_;}
+	int getnbval() const{return nbval;}
+	double getval(int i) const{return val_[i];}
+	int getposii(int i) const{return posii[i];}
+	int getposij(int i) const{return posij[i];}
+
+	matcreuse(const matcreuse & M){
+		dim_=M.getdim();
+		nbval=M.getnbval();
+		for (int i = 0; i < nbval; i++){
+			val_[i]=M.getval(i);
+			posii[i]=M.getposii(i);
+			posij[i]=M.getposij(i);
+		}
+	}
+
+	~matcreuse(){
+		nbval=0;
+		dim_=0;
+		delete[] val_;
+		delete[] posii;
+		delete[] posij;
+	}
+
+
+};
 
 
 
