@@ -1,5 +1,6 @@
 #include "maillage.h"
 #include <ctime>
+using namespace std;
 int main( int argc, char * argv[] )
 { //initialisation du générateur aleatoire 
   srand (time(0));
@@ -17,22 +18,21 @@ int main( int argc, char * argv[] )
 
 
 
-
-
   //test de produit mat vect
   Matrice m=Matrice(2);
   m(1,1)=1;
   m(1,2)=1;
   m(2,1)=2;
   m(2,2)=2;
+  cout<<"matrice m est"<<m<<endl;
   vecteur v(2);
   v(1)=3;
   v(2)=4;
   cout<<"le vecteur v est-> "<<v<<endl;
   vecteur res(2);
   res = m*v;
-/*  cout<<"produit de mat m et v est-> "<<res<<endl;
-  Maillage mail(4,2);
+  cout<<"produit de mat m et v est-> "<<res<<endl;
+/*  Maillage mail(4,2);
   mail.affiche();
   cout<<"Copie du maillage du carre unite"<<endl;
   Maillage mail2(mail);

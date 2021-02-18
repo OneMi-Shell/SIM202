@@ -1,4 +1,5 @@
 #include "maillage.h"
+using namespace std;
 
 
 //fonc pour point
@@ -350,7 +351,7 @@ Matrice::Matrice(const Matrice& ref): taille_(ref.taille_)
     if(taille_ != 0)
     {
         matrice_ = new double*[taille_];           // 
-        for(size_t i=0; i<taille_;i++)
+        for(int i=0; i<taille_;i++)
                matrice_[i]=ref.matrice_[i];
     }
 }
@@ -375,7 +376,7 @@ Matrice Matrice::operator=(const Matrice &m)
         if(m.taille_ != 0){
             matrice_ = new double*[m.taille_];
             taille_ = m.taille_;
-           for(size_t  i=0;i<taille_;i++)
+           for(int i=0;i<taille_;i++)
            {
                matrice_[i]=m.matrice_[i];
            }
@@ -422,8 +423,22 @@ vecteur Matrice::operator *(const vecteur & v){           //prod mat et vect
 
 
 
-
-
+ostream & operator <<(ostream & out,const Matrice &m){
+     cout<<"taille ="<<m.getTaille()<<endl;
+     for (int i=1;i<=m.getTaille();i++){
+          for(int j=1;j<=m.getTaille();j++){
+               cout<<m(i,j)<<" ";
+          }
+          cout<<"\n";
+     }
+     return out;
+}
+/*
+istream & Matrice::operator>>(istream & in , vecteur & u){
+     for(int i;i<u.dim();i++) in>>u[i];
+     return in;
+}
+*/
 
 
 //fonc pour num
@@ -471,10 +486,21 @@ void Maillage::maille_carre_unite(int m,int n){
 		
 	}
 		
-	
+}
 
-	
-	
+
+int Maillage::nbtri(){
+     int nb=0;
+     for(list<Numeros>::iterator itn=n.begin() ; itn!=n.end();itn++)
+          nb++;
+     return nb;
+}
+
+int Maillage::nbsommets(){
+     int nb=0;
+     for(vector<Point2d>::iterator itn=v.begin();itn!=v.end();itn++)
+          nb++;
+     return nb;
 }
 
 /*

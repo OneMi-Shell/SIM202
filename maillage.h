@@ -164,14 +164,13 @@ class Matrice
 	double & operator ()(int i,int j){return matrice_[i-1][j-1];}
 
    	double operator ()(int i,int j) const{return matrice_[i-1][j-1];}
-    
-   
-  //friend std :: ostream& operator<<(std :: ostream &ostr, const Matrice &m); 
+     
 
-  //friend std :: istream& operator>>(std :: istream &is, Matrice &m);
+    /*istream& operator>>(istream &is, Matrice &m);*/
           
 
 };
+ostream& operator<<(ostream &out, const Matrice &);
 
 
 //
@@ -230,7 +229,7 @@ public:
 //classe num
 
 
-class Numeros:public vector<int>    //classe triangle ,en fonction de 3 entiers
+class Numeros:public vector<int>    //classe triangle ,un vecteur en fonction de 3 entiers
 {public:
 	Numeros(int a,int b,int c){
 		resize(3);
@@ -280,12 +279,15 @@ class Maillage{
 		void maille_carre_unite(int,int);
 		Maillage(const Maillage &);
 		void affichage();
+		int nbtri();
+		int nbsommets();
+
+		Numeros gettri(int) const;
 		Maillage& tf_affine(const vector<double> &,const vector<double> &);
 		Maillage& operator +=(const Maillage &);
 		void maiile_rectangle(double ,double,double,double,int,int);
 		
 };
-
 
 Maillage operator +(const Maillage&,const Maillage&);
 
