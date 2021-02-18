@@ -463,13 +463,17 @@ ostream & operator <<(ostream & os,const Numeros & n){
 
 //fonc pour maillage
 
+
+
+//prob avec unit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 void Maillage::maille_carre_unite(int m,int n){
 	double nbx=1/m;
 	double nby=1/n;              //on a m*n segment
 	v.resize((m+1)*(n+1));        // donc +1 pour nb de points
 	vector<Point2d>::iterator its=v.begin();
 	for (int j=0;j<n+1;j++){
-		double y=y*nby;
+		double y=j*nby;            
 		for (int i = 0; i < n+1; i++,its++)
 		{
 			*its=Point2d(i*nbx,y);            //pour remplir v 
@@ -491,7 +495,7 @@ void Maillage::maille_carre_unite(int m,int n){
 
 int Maillage::nbtri(){
      int nb=0;
-     for(list<Numeros>::iterator itn=n.begin() ; itn!=n.end();itn++)
+     for(vector<Numeros>::iterator itn=n.begin() ; itn!=n.end();itn++)
           nb++;
      return nb;
 }
@@ -518,13 +522,13 @@ void Maillage::affichage(){
 	vector<Point2d>::iterator itn=v.begin();
 	for(;itn!=this->v.end();itn++)
 		cout<<*itn;
-	list<Numeros>::iterator it=n.begin();
+	vector<Numeros>::iterator it=n.begin();
 	for(;it!=this->n.end();it++)
 		cout<<*it;
 }
 
 
-
+/*
 Point2d& Point2d::tf_affine(const vector<double> & A,const vector<double> & t){
 	double a=x;
 	double b=y;
@@ -554,12 +558,12 @@ Maillage& Maillage::operator +=(const Maillage & m){
 		n.push_back(*itn);
 	return *this;
 }
-/*
+
 Maillage operator +(const Maillage& a,const Maillage& b){
 	Maillage m(a);
 	return m+=b;
 }
-*/
+
 
 
 void Maillage::maiile_rectangle(double a,double b,double c,double d,int m,int n){
@@ -572,3 +576,5 @@ void Maillage::maiile_rectangle(double a,double b,double c,double d,int m,int n)
 	t[1]=c;
 	tf_affine(A,t);
 }
+
+*/

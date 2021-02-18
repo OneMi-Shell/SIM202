@@ -32,9 +32,10 @@ int main( int argc, char * argv[] )
   vecteur res(2);
   res = m*v;
   cout<<"produit de mat m et v est-> "<<res<<endl;
-/*  Maillage mail(4,2);
-  mail.affiche();
-  cout<<"Copie du maillage du carre unite"<<endl;
+  Maillage mail;
+  mail.maille_carre_unite(4,2);
+  mail.affichage();
+/*  cout<<"Copie du maillage du carre unite"<<endl;
   Maillage mail2(mail);
   mail2.affiche();
   cout<<"Maillage du rectangle [2,4]x[10,20]"<<endl;

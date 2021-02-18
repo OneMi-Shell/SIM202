@@ -274,8 +274,10 @@ ostream & operator <<(ostream &,const Numeros &);
 class Maillage{
 	public:
 		vector<Point2d> v;     //liste de points
-		list<Numeros> n;        // liste de numero de points de triangle,car chaque rectangle est découpé en 2 triangle, donc , ici,chaque listnum est une liste de numé de chaque triangle
-		
+		vector<Numeros> n;        // liste de numero de points de triangle,car chaque rectangle est découpé en 2 triangle, donc , ici,chaque listnum est une liste de numé de chaque triangle
+		                        //liste chainé:avantage pour supprimer
+		vector<int> zone;
+		Maillage(){};
 		void maille_carre_unite(int,int);
 		Maillage(const Maillage &);
 		void affichage();
