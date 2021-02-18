@@ -11,9 +11,27 @@ int main( int argc, char * argv[] )
   Numeros ns(1,2,3);
   cout<<"Numeros ns(1,2,3) -> "<<ns<<endl;
   cout<<"ns(2)="<<ns(2)<<endl;
-/*  cout<<"ns.shift(2) -> "<<ns.shift(2)<<endl;
+  cout<<"ns.shift(2) -> "<<ns.shift(2)<<endl;
   //test de la classe Maillage
   cout<<"Maillage du carre unite"<<endl;
+
+
+
+
+
+  //test de produit mat vect
+  Matrice m=Matrice(2);
+  m(1,1)=1;
+  m(1,2)=1;
+  m(2,1)=2;
+  m(2,2)=2;
+  vecteur v(2);
+  v(1)=3;
+  v(2)=4;
+  cout<<"le vecteur v est-> "<<v<<endl;
+  vecteur res(2);
+  res = m*v;
+/*  cout<<"produit de mat m et v est-> "<<res<<endl;
   Maillage mail(4,2);
   mail.affiche();
   cout<<"Copie du maillage du carre unite"<<endl;

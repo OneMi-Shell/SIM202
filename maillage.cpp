@@ -64,6 +64,7 @@ void test_dim(int d1, int d2, const char * org)
 // constructeurs-destructeurs
 vecteur::vecteur(int d, double v0) //dim et val constante
 {
+     std::cout<<d<<std::endl;
    init(d);
    for(int i=0;i<dim_;i++) val_[i]=v0;
 }
@@ -79,6 +80,7 @@ vecteur::~vecteur() {clear();}
 // outils de construction et de destruction
 void vecteur::init(int d) //initialisation avec allocation dynamique
 {
+     std::cout<<d<<std::endl;
    if(d<=0) stop("init() : dimension <=0");
    dim_=d;
    val_ = new double[d];
@@ -327,6 +329,100 @@ vecteur operator ,(const vecteur & u,const vecteur & v){
      return w;
 }
 
+//
+//fonc pour mat
+
+Matrice::Matrice(int n): taille_(n)
+{
+   matrice_=new double * [taille_];
+   for(int i=0; i<taille_; i++)
+     matrice_[i]=new double [taille_];
+   for (int i=0; i<taille_; i++)
+    {
+      for (int j=0; j<taille_; j++)
+       matrice_[i][j]=0;
+     }
+}
+ 
+
+Matrice::Matrice(const Matrice& ref): taille_(ref.taille_)
+{
+    if(taille_ != 0)
+    {
+        matrice_ = new double*[taille_];           // 
+        for(size_t i=0; i<taille_;i++)
+               matrice_[i]=ref.matrice_[i];
+    }
+}
+
+
+
+
+Matrice::~Matrice()
+{ 
+    delete[] matrice_;
+    taille_ = 0;
+}
+
+  
+
+Matrice Matrice::operator=(const Matrice &m)
+{
+    if(m.matrice_ != matrice_){ 
+        delete [] matrice_;
+        taille_ = 0;
+        matrice_ = nullptr;
+        if(m.taille_ != 0){
+            matrice_ = new double*[m.taille_];
+            taille_ = m.taille_;
+           for(size_t  i=0;i<taille_;i++)
+           {
+               matrice_[i]=m.matrice_[i];
+           }
+        }
+    }
+    return *this;
+}
+
+
+
+
+
+int Matrice::getTaille() const
+{
+    return taille_;
+}
+ 
+ 
+
+int Matrice::getVal(int i, int j) const
+{
+    return matrice_[i][j];
+}
+
+
+vecteur Matrice::operator *(const vecteur & v){           //prod mat et vect
+     if(v.dim()==this->taille_){
+          vecteur res = vecteur(v);
+          res.init(taille_);
+          for (int i = 0; i < taille_; i++)
+          {
+               for (int j = 0; j < taille_; j++)
+               {
+                    res[i]=res[i]+matrice_[i][j]*v[i];
+               }
+               
+          }
+          return res;
+          
+     }
+     else
+          return vecteur();
+}
+
+
+
+
 
 
 
@@ -381,9 +477,16 @@ void Maillage::maille_carre_unite(int m,int n){
 	
 }
 
-
-
-
+/*
+Maillage::Maillage(const Maillage & m){
+     Numeros::const_iterator itn1=m.n.begin();
+     Numeros::iterator itn2=n.begin();
+	for(;itn!=n.end();itn++)
+		os<<*itn<<",";
+	os<<*n.end();
+	return os;
+}
+*/
 
 void Maillage::affichage(){
 	vector<Point2d>::iterator itn=v.begin();
@@ -425,12 +528,12 @@ Maillage& Maillage::operator +=(const Maillage & m){
 		n.push_back(*itn);
 	return *this;
 }
-
+/*
 Maillage operator +(const Maillage& a,const Maillage& b){
 	Maillage m(a);
 	return m+=b;
 }
-
+*/
 
 
 void Maillage::maiile_rectangle(double a,double b,double c,double d,int m,int n){

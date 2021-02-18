@@ -57,8 +57,14 @@ private :
    double * val_;     //tableaux de valeurs
 
 public:
-   vecteur(int d=0, double v0=0); //dim et val constante
-   vecteur(const vecteur & v);    //constructeur par copie
+   vecteur(int d=0, double v0=0); //dim et val constante   , enlever 0 de d
+   vecteur(const vecteur & v);    //constructeur par copie 
+   /*
+   vecteur(int d){dim_=d;val_=new double [d]; for (int i = 0; i < d; i++)
+   {
+	   val_[i]=0;
+   }
+   */
    ~vecteur();
 
    //tools
@@ -132,22 +138,56 @@ vecteur operator ,(const vecteur & u,const vecteur & v);
 
 
 
+
+
+
+
+//matrce
+class Matrice
+{
+  protected:
+    int taille_;
+    double **matrice_; 
+
+
+  public:
+    Matrice():taille_(0), matrice_(0){};   
+    Matrice(int); 
+    Matrice(const Matrice& ref);
+    ~Matrice();
+
+
+    Matrice operator=(const Matrice &);   
+    int getTaille() const;
+    int getVal(int i, int j) const;
+    vecteur operator *(const vecteur &);
+	double & operator ()(int i,int j){return matrice_[i-1][j-1];}
+
+   	double operator ()(int i,int j) const{return matrice_[i-1][j-1];}
+    
+   
+  //friend std :: ostream& operator<<(std :: ostream &ostr, const Matrice &m); 
+
+  //friend std :: istream& operator>>(std :: istream &is, Matrice &m);
+          
+
+};
+
+
 //
 //
 //
 //matrice creuse
-class matcreuse
+class matcreuse : public Matrice
 {
 private :
-   int dim_;          //dimension de mat
-   int nbval;         //nb de val non nul
-   double * val_;     //tableaux de val non nul de matcreuse
+   	int nbval;         //nb de val non nul
 	int * posii;
 	int * posij;
 public:
-	matcreuse(){dim_=0;nbval=0;val_=NULL;posii=NULL;posij=NULL;}
-	matcreuse(int n){dim_=n;nbval=0;val_=NULL;posii=NULL;posij=NULL;}
-	matcreuse(int d,int n,double* t1,int* t2,int* t3){
+	matcreuse():Matrice(){nbval=0;posii=NULL;posij=NULL;}
+	matcreuse(int n):Matrice(n){nbval=0;posii=NULL;posij=NULL;}
+/*	matcreuse(int d,int n,double* t1,int* t2,int* t3){
 		dim_=d;
 		nbval=n;
 		for (int i = 0; i < n; i++)
@@ -157,19 +197,15 @@ public:
 			posij[i]=t3[i];
 		}
 		
-	}
+	}*/
 
-	int getdim() const{return dim_;}
 	int getnbval() const{return nbval;}
-	double getval(int i) const{return val_[i];}
 	int getposii(int i) const{return posii[i];}
 	int getposij(int i) const{return posij[i];}
 
-	matcreuse(const matcreuse & M){
-		dim_=M.getdim();
+	matcreuse(const matcreuse & M):Matrice(M){
 		nbval=M.getnbval();
 		for (int i = 0; i < nbval; i++){
-			val_[i]=M.getval(i);
 			posii[i]=M.getposii(i);
 			posij[i]=M.getposij(i);
 		}
@@ -177,12 +213,11 @@ public:
 
 	~matcreuse(){
 		nbval=0;
-		dim_=0;
-		delete[] val_;
+		taille_=0;
+		delete [] matrice_;
 		delete[] posii;
 		delete[] posij;
 	}
-
 
 };
 
@@ -195,7 +230,7 @@ public:
 //classe num
 
 
-class Numeros:public vector<int>
+class Numeros:public vector<int>    //classe triangle ,en fonction de 3 entiers
 {public:
 	Numeros(int a,int b,int c){
 		resize(3);
@@ -243,6 +278,7 @@ class Maillage{
 		list<Numeros> n;        // liste de numero de points de triangle,car chaque rectangle est découpé en 2 triangle, donc , ici,chaque listnum est une liste de numé de chaque triangle
 		
 		void maille_carre_unite(int,int);
+		Maillage(const Maillage &);
 		void affichage();
 		Maillage& tf_affine(const vector<double> &,const vector<double> &);
 		Maillage& operator +=(const Maillage &);
